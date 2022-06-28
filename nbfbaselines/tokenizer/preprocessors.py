@@ -7,9 +7,6 @@ def preprocessor_from_config(config, target_vocab = None):
         IndexToMask()
     ]
 
-    if config.construct_graph:
-        preprocessors.append(BatchEdges(config.graph_config))
-
     if config.add_special_tokens:
         preprocessors.append(AddSpecialTokens())
     
@@ -24,9 +21,6 @@ def preprocessor_from_config(config, target_vocab = None):
                 StringTruncate(config.str_cutoff)
             )
         )    
-
-    if config.construct_graph:
-        preprocessors.append(AddGraphIndex())
 
     return Preprocessor(preprocessors)
 
@@ -157,58 +151,3 @@ class AddSpecialTokens:
 
         return source_input
 
-# Graph preprocessor ------------------------------------------------
-
-class BatchEdges:
-
-    def __init__(self, config):
-        self.config = config
-
-        self.edge_type_keys = [
-            "edge_%s" % edge_type
-            for edge_type in self.config.edge_types
-        ]
-
-        if self.config.invert_edges:
-            self.edge_type_keys.extend([
-                "edge_inv_%s" % edge_type
-                for edge_type in self.config.edge_types
-            ])
-
-
-    def __call__(self, source_input):
-        assert all(edge_type in source_input for edge_type in self.edge_type_keys),\
-            "Graph generator does not produce all expected edges. Expected: %s" % (str(self.edge_type_keys))
-        
-        edge_types = []
-        sources    = []
-        targets    = []
-
-        for edge_ix, edge_type in enumerate(self.edge_type_keys):
-            edges = source_input[edge_type]
-            
-            edge_types.extend((edge_ix+1,) * len(edges))
-            sources.extend([e[0] for e in edges])
-            targets.extend([e[1] for e in edges])
-
-            del source_input[edge_type]
-        
-        source_input["typed_edges"] = (edge_types, sources, targets)
-
-        return source_input
-
-
-class AddGraphIndex:
-
-    def __call__(self, source_input):
-        graph_nodes = source_input["input_tokens"]
-        source_input["graph_index"] = [0] * len(graph_nodes)
-        return source_input
-
-
-class AddBatchDim:
-
-    def __init__(self, source_input):
-        return {
-            k: [v] for k, v in source_input.items()
-        }

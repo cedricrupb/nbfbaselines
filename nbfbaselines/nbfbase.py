@@ -8,6 +8,8 @@ from .tokenizer import tokenizer_from_config
 from .models    import nbfmodel_from_config
 from .config    import save_config_to_json, load_config_from_json
 
+from .utils     import load_model_directory
+
 from collections import OrderedDict
 
 
@@ -34,7 +36,9 @@ class NBFModel:
 
     # Load / Save utils --------------------------------
     @staticmethod
-    def from_pretrained(path_to_pretrained):
+    def from_pretrained(name_or_path):
+        path_to_pretrained = load_model_directory(name_or_path)
+
         config_path = os.path.join(path_to_pretrained, "config.json")
         config      = load_config_from_json(config_path)
         nbf_model   = NBFModel(config)
@@ -44,7 +48,6 @@ class NBFModel:
         model_path = os.path.join(path_to_pretrained, "model.pt")
         state_dict = torch.load(model_path, 
                         map_location=torch.device("cpu"))
-        #state_dict = convert_to_old_format(state_dict)
         model.load_state_dict(
             state_dict
         )
@@ -139,11 +142,7 @@ class NBFModel:
             **kwargs
         )
 
-        # Transform to batch if seq model
-        if "graph_index" not in input_dict: # TODO: Better impl
-            input_dict = {k: v.unsqueeze(0) for k, v in input_dict.items()}
-
-        input_dict = {k: v.to(self.device) for k, v in input_dict.items()}
+        input_dict = {k: v.unsqueeze(0).to(self.device) for k, v in input_dict.items()}
 
         # Run the model --------------------------------
         model = self.model.eval()
