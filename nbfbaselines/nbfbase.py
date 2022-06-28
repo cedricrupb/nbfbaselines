@@ -122,7 +122,7 @@ class NBFModel:
                     input_text = None, 
                     input_tokens = None,
                     topk = 1,
-                    beam_width = 1,
+                    beam_width = 5,
                     return_tokens = False,
                     return_logits = False,
                     **kwargs):
