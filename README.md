@@ -13,11 +13,11 @@ def compare(x1, x2):
 ```
 * **Binary Operator Bugs:** The wrong binary operator was used
 ```python
-L = [0, 1, 2]
-i = 0
-while i <= len(L): # Bug: < instead of <=
-    L[i] = L[i] + 1
-    i += 1
+def add_one(L):
+    i = 0
+    while i <= len(L): 
+        L[i] = L[i] + 1
+        i += 1
 ```
 * **Unary Operator Bugs:** A unary operator was used mistakenly or was forgotten
 ```python
@@ -28,11 +28,11 @@ else:
 ```
 * **Wrong Literal Bugs:** The wrong literal was used
 ```python
-L = [0, 1, 2]
-i = 0
-while i <= len(L): 
-    L[i] = L[i] + 1
-    i += 2 # Bug: 1 instead of 2
+def add_one(L):
+    i = 0
+    while i < len(L): 
+        L[i] = L[i] + 1
+        i += 2 # Bug: 1 instead of 2
 ```
 
 ## Quick start: RealiT
