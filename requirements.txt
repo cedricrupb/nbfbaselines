@@ -1,0 +1,5 @@
+code_tokenize==0.2.0
+torch>=1.8.0
+transformers
+tqdm
+numpy
