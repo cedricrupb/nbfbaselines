@@ -1,7 +1,7 @@
 # NBFBaselines
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cedricrupb/nbfbaselines/blob/main/demo.ipynb) 
-[[**PAPER**]()]
-> Neural baseline for finding and fixing single token bugs in Python
+[**PAPER(soon)**]
+> Neural baselines for finding and fixing single token bugs in Python
 
 Software bugs can interrupt our workflow and finding them can often be very time-consuming. Especially smaller bugs are often hard to spot since they affect only a few lines of code out of thousands. For example, recognizing that a variable was not renamed after refactoring or that a loop will run in an out-of-bounds error because of the comparison operator is often difficult.
 
