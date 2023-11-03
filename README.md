@@ -1,6 +1,6 @@
 # NBFBaselines
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cedricrupb/nbfbaselines/blob/main/demo.ipynb) 
-[[**PAPER**](http://arxiv.org/abs/2207.00301)]
+[[**PAPER**](https://github.com/cedricrupb/nbfbaselines/blob/main/paper/ase23-preprint.pdf) | [**ARTIFACT**](https://zenodo.org/records/7900059)]
 > Neural baselines for finding and fixing single token bugs in Python
 
 Software bugs can interrupt our workflow and finding them can often be very time-consuming. Especially smaller bugs are often hard to spot since they affect only a few lines of code out of thousands. For example, recognizing that a variable was not renamed after refactoring or that a loop will run in an out-of-bounds error because of the comparison operator is often difficult.
@@ -112,12 +112,27 @@ format:
 ```
 Note that `input_text` is required. The fields `error_marker` and `repair` are required if the code contains a bug. `error_marker` specifies the start line (sl), start char in that line (sc), end line (el) and the end char in that line (ec). The `repair` can be any string. The JSON object can contain further meta data. An example for a test_file is given in `data/real_bugs_dummy.jsonl`.
 
+## Status of Graph Models
+The graph models will be published soon. Until then, please refer to our [artifact](https://zenodo.org/records/7900059) containing the complete implementation of the graph models.
+
 ## Project info
 
 Cedric Richter - [@cedrichter](https://twitter.com/cedrichter) - cedric.richter@uol.de
 
 Distributed under the MIT license. See `LICENSE` for more information.
 
+If you find this project or our artifact useful, please cite our work: 
+```bibtex
+@inproceedings{richter2023how,
+  title={How to Train Your Neural Bug Detector: Artificial vs Real Bugs},
+  author={Cedric Richter, Heike Wehrheim},
+  booktitle={ASE},
+  year={2023}
+}
+```
+
 This project is currently incomplete and mainly designed to showcase `RealiT`. However, we plan to release the full code base including further pre-trained models, training script and evaluation code.
+
+For more information on `RealiT` specifically, please check our [preprint](https://arxiv.org/abs/2207.00301).
 
 Feel free to open an issue if anything unexpected happens.
