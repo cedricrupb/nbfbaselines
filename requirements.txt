@@ -1,5 +1,5 @@
 code_tokenize==0.2.0
 torch>=1.8.0
-transformers
+transformers<=4.28.1
 tqdm
 numpy
