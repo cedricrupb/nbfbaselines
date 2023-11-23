@@ -36,7 +36,7 @@ class NBFModel:
 
     # Load / Save utils --------------------------------
     @staticmethod
-    def from_pretrained(name_or_path):
+    def from_pretrained(name_or_path, old_format = False):
         path_to_pretrained = load_model_directory(name_or_path)
 
         config_path = os.path.join(path_to_pretrained, "config.json")
@@ -48,6 +48,9 @@ class NBFModel:
         model_path = os.path.join(path_to_pretrained, "model.pt")
         state_dict = torch.load(model_path, 
                         map_location=torch.device("cpu"))
+
+        if old_format: state_dict = convert_to_old_format(state_dict)
+
         model.load_state_dict(
             state_dict
         )
